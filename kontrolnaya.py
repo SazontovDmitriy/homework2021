@@ -1,8 +1,8 @@
 import copy
 
-ACC = 'acc'
-JMP = 'jmp'
-NOP = 'nop'
+A = 'acc'
+J = 'jmp'
+N = 'nop'
 
 
 def run(instructions: list) -> [bool, int]:
@@ -12,29 +12,29 @@ def run(instructions: list) -> [bool, int]:
     while (0 <= ix < len(instructions)) and (not visited[ix]):
         visited[ix] = True
         operation, arg = instructions[ix]
-        if operation == ACC:
+        if operation == A:
             accumulator += arg
             ix += 1
-        elif operation == JMP:
+        elif operation == J:
             ix += arg
-        elif operation == NOP:
+        elif operation == N:
             ix += 1
 
     is_terminated = ix == len(instructions)
     return is_terminated, accumulator
 
 
-def part1(instructions):
+def p1(instructions):
     _, accumulator = run(instructions)
     return accumulator
 
 
-def part2(instructions):
+def p2(instructions):
     for ix, instruction in enumerate(instructions):
         operation, arg = instruction
-        if operation in (NOP, JMP):
+        if operation in (N, J):
             instructions_copy = copy.deepcopy(instructions)
-            instructions_copy[ix][0] = JMP if operation == NOP else NOP
+            instructions_copy[ix][0] = J if operation == N else N
     return 0
 
 
@@ -52,7 +52,7 @@ with open('input.txt') as f:
         line
         for line in f.read().splitlines()
     ]
-    print(part2(extract_data(inputs)))
+    print(p2(extract_data(inputs)))
 
 
 
