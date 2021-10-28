@@ -35,6 +35,11 @@ def p2(instructions):
         if operation in (N, J):
             instructions_copy = copy.deepcopy(instructions)
             instructions_copy[ix][0] = J if operation == N else N
+
+            is_terminated, accumulator = run(instructions_copy)
+            if is_terminated:
+                return accumulator
+
     return 0
 
 
@@ -43,6 +48,7 @@ def extract_data(lines: list) -> list:
     for line in lines:
         operation, arg = line.split(' ')
         instructions.append([operation, int(arg)])
+
 
     return instructions
 
